@@ -17,10 +17,6 @@ public class Background : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Jump"))
-        {
-            obj.transform.position += new Vector3(0, -flySpeed * Time.deltaTime, 0);
-        }
         if (Vector3.Distance(oldPosition, obj.transform.position) > moveRange)
         {
             if (obj.CompareTag("Sky"))

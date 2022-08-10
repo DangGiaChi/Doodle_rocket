@@ -6,7 +6,7 @@ public class Rocket : MonoBehaviour
 {
     public Rigidbody2D rocketRigid;
     private GameObject obj;
-    public float flySpeed = 20f;
+    public float flyForce = 20f;
     void Start()
     {
         obj = this.gameObject;
@@ -18,7 +18,7 @@ public class Rocket : MonoBehaviour
     {
         if (Input.GetButton("Jump"))
         {
-            obj.transform.position += new Vector3(0, flySpeed * Time.deltaTime, 0);
+            rocketRigid.AddForce(new Vector3(0, flyForce * Time.deltaTime, 0), ForceMode2D.Impulse);
         }
     }
 }

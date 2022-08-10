@@ -7,7 +7,7 @@ public class Background : MonoBehaviour
     private Vector3 tempPos;
     private GameObject obj;
     public float flySpeed = 0f;
-    public float resetRange = 17.55f;
+    public float resetRange = 27.65f;
     void Start()
     {
         obj = gameObject;
@@ -26,7 +26,6 @@ public class Background : MonoBehaviour
             tempPos.y += resetRange;
 
             obj.transform.position = tempPos;
-            Debug.Log("Collided");
         }
     }
 }

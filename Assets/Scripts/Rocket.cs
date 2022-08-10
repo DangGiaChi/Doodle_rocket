@@ -7,10 +7,13 @@ public class Rocket : MonoBehaviour
     public Rigidbody2D rocketRigid;
     private GameObject obj;
     public float flyForce = 15f;
+    private Animator anim;
     void Start()
     {
         obj = this.gameObject;
         rocketRigid = obj.GetComponent<Rigidbody2D>();
+        anim = obj.GetComponent<Animator>();
+        anim.SetBool("Fly", false);
     }
 
     // Update is called once per frame
@@ -19,6 +22,19 @@ public class Rocket : MonoBehaviour
         if (Input.GetButton("Jump"))
         {
             rocketRigid.AddForce(new Vector3(0, flyForce * Time.deltaTime, 0), ForceMode2D.Impulse);
+        }
+        Animate();
+    }
+
+    void Animate()
+    {
+        if (Input.GetButton("Jump"))
+        {
+            anim.SetBool("Fly", true);
+        }
+        else
+        {
+            anim.SetBool("Fly", false);
         }
     }
 }

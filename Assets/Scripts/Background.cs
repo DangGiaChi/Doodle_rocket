@@ -4,25 +4,29 @@ using UnityEngine;
 
 public class Background : MonoBehaviour
 {
-    private Vector3 oldPosition;
+    private Vector3 tempPos;
     private GameObject obj;
     public float flySpeed = 0f;
-    private float moveRange = 17.55f;
+    public float resetRange = 17.55f;
     void Start()
     {
         obj = gameObject;
-        oldPosition = obj.transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(oldPosition, obj.transform.position) > moveRange)
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("MainCamera"))
         {
-            if (obj.CompareTag("Sky"))
-            {
-                obj.transform.position = oldPosition;
-            }
+            tempPos = obj.transform.position;
+            tempPos.y += resetRange;
+
+            obj.transform.position = tempPos;
+            Debug.Log("Collided");
         }
     }
 }

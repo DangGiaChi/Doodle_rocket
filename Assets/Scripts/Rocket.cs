@@ -6,7 +6,7 @@ public class Rocket : MonoBehaviour
 {
     public Rigidbody2D rocketRigid;
     private GameObject obj;
-    public float flyForce = 20f;
+    public float flyForce = 15f;
     void Start()
     {
         obj = this.gameObject;

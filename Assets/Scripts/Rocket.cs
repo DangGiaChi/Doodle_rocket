@@ -12,6 +12,7 @@ public class Rocket : MonoBehaviour
     private float movementx;
 
     public float gas;
+    private float inGas;
     private float gasLoss = 70f;
     void Start()
     {
@@ -26,12 +27,16 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (rocketRigid.IsSleeping())
+        {
+            rocketRigid.WakeUp();
+        }
         if (Input.GetButton("Jump"))
         {
             if (gas > 0)
             {
                 rocketRigid.AddForce(new Vector3(0, flyForce * Time.deltaTime, 0), ForceMode2D.Impulse);
-                gas -= gasLoss*Time.deltaTime;
+                gas -= gasLoss * Time.deltaTime;
             }
         }
         movementx = Input.GetAxisRaw("Horizontal");
@@ -56,6 +61,22 @@ public class Rocket : MonoBehaviour
         else
         {
             anim.SetBool("Fly", false);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        inGas = gas;
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Gas station"))
+        {
+            if (gas < 100f)
+            {
+                gas += (100f - inGas) * Time.deltaTime / 1;
+            }
         }
     }
 }

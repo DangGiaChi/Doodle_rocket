@@ -18,9 +18,9 @@ public class Background : MonoBehaviour
     {
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D other)
     {
-        if (collision.gameObject.CompareTag("MainCamera"))
+        if (other.gameObject.CompareTag("MainCamera"))
         {
             tempPos = obj.transform.position;
             tempPos.y += resetRange;

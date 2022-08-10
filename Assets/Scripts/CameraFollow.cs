@@ -8,18 +8,22 @@ public class CameraFollow : MonoBehaviour
     private Vector3 tempPos;
     private GameObject obj;
     private bool firstJump;
-    private GameObject gasStation;
+    private GameObject[] gasStation;
+
+    private GameObject background;
     void Start()
     {
         obj = this.gameObject;
         rocket = GameObject.FindWithTag("Rocket").transform;
         firstJump = false;
-        gasStation = GameObject.FindWithTag("Gas station");
+        gasStation = GameObject.FindGameObjectsWithTag("Gas station");
+        background = GameObject.FindWithTag("Sky");
     }
 
     // Update is called once per frame
     void Update()
     {
+        gasStation = GameObject.FindGameObjectsWithTag("Gas station");
         if (Input.GetButtonDown("Jump"))
         {
             firstJump = true;
@@ -28,15 +32,23 @@ public class CameraFollow : MonoBehaviour
         tempPos.y = rocket.transform.position.y;
         if (firstJump)
         {
-            gasStation.GetComponent<GasStation>().colliderOn = false;
+            setColliderGasStation(false);
             if (tempPos.y > obj.transform.position.y)
             {
                 obj.transform.position = tempPos;
             }
             if (tempPos.y < obj.transform.position.y)
             {
-                gasStation.GetComponent<GasStation>().colliderOn = true;
+                setColliderGasStation(true);
             }
+        }
+    }
+
+    void setColliderGasStation(bool colliderBool)
+    {
+        for(int i = 0; i < gasStation.Length; ++i)
+        {
+            gasStation[i].GetComponent<GasStation>().colliderOn = colliderBool;
         }
     }
 }

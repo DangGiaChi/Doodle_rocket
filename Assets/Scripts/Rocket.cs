@@ -5,16 +5,19 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     public Rigidbody2D rocketRigid;
+    private Transform rocketTransform;
     private GameObject obj;
-    public float flyForce = 15f;
+    private float flyForce = 10f;
     private Animator anim;
+    private float movementx;
 
     public float gas;
     private float gasLoss = 70f;
     void Start()
     {
-        obj = this.gameObject;
+        obj = gameObject;
         rocketRigid = obj.GetComponent<Rigidbody2D>();
+        rocketTransform = obj.transform;
         anim = obj.GetComponent<Animator>();
         anim.SetBool("Fly", false);
         gas = 100f;
@@ -31,6 +34,9 @@ public class Rocket : MonoBehaviour
                 gas -= gasLoss*Time.deltaTime;
             }
         }
+        movementx = Input.GetAxisRaw("Horizontal");
+        rocketTransform.position += new Vector3(5 * movementx * Time.deltaTime, 0, 0);
+        
         Animate();
     }
 

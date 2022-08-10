@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sky
   - Rocket
+  - Gas station
   layers:
   - Default
   - TransparentFX

@@ -19,7 +19,7 @@ public class GasController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gasBar.y = (scaleInitial.y * rocket.GetComponent<Rocket>().gas) / 100f;
+        gasBar.y = scaleInitial.y * rocket.GetComponent<Rocket>().gas / 100f;
         obj.transform.localScale = gasBar;
     }
 }

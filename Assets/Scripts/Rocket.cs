@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour
 {
@@ -14,6 +16,12 @@ public class Rocket : MonoBehaviour
     public float gas;
     private float inGas;
     private float gasLoss = 70f;
+
+    [SerializeField]
+    public bool isGround;
+
+    [SerializeField]
+    public float initialHeight;
     void Start()
     {
         obj = gameObject;
@@ -22,6 +30,7 @@ public class Rocket : MonoBehaviour
         anim = obj.GetComponent<Animator>();
         anim.SetBool("Fly", false);
         gas = 100f;
+        isGround = true;
     }
 
     // Update is called once per frame
@@ -39,9 +48,12 @@ public class Rocket : MonoBehaviour
                 gas -= gasLoss * Time.deltaTime;
             }
         }
-        movementx = Input.GetAxisRaw("Horizontal");
-        rocketTransform.position += new Vector3(5 * movementx * Time.deltaTime, 0, 0);
-        
+        if (isGround == false)
+        {
+            movementx = Input.GetAxisRaw("Horizontal");
+            rocketTransform.position += new Vector3(5 * movementx * Time.deltaTime, 0, 0);
+        }
+
         Animate();
     }
 
@@ -77,6 +89,23 @@ public class Rocket : MonoBehaviour
             {
                 gas += (100f - inGas) * Time.deltaTime / 1;
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("ha"))
+        {
+            SceneManager.LoadScene("SampleScene");
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGround = false;
+            initialHeight = transform.position.y;
         }
     }
 }

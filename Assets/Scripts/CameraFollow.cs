@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour
     private Vector3 tempPos;
     private GameObject obj;
     private bool firstJump;
-    private GameObject[] gasStation;
+    public GameObject[] gasStation;
 
     private GameObject background;
     void Start()
@@ -37,7 +37,7 @@ public class CameraFollow : MonoBehaviour
             {
                 obj.transform.position = tempPos;
             }
-            if (tempPos.y < obj.transform.position.y)
+            if (tempPos.y < obj.transform.position.y - Time.deltaTime)
             {
                 setColliderGasStation(true);
             }
